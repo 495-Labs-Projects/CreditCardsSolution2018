@@ -9,12 +9,12 @@
 # Credit card type-specific rules generally state that a number must start with a string
 # of digits, and have a specific length. An incomplete list of the rules:
 #
-#	  Card Type              Abbrev       Prefixes         Length
-#	  American Express        AMEX        34 or 37          15
-#	  Diners Club             DCCB        300-305           14
-#	  Discover Card           DISC        6011 or 65        16
-#	  Master Card             MC          51-55             16
-#	  Visa                    VISA        4                 13 or 16
+#   Card Type              Abbrev       Prefixes         Length
+#   American Express        AMEX        34 or 37          15
+#   Diners Club             DCCB        300-305           14
+#   Discover Card           DISC        6011 or 65        16
+#   Master Card             MC          51-55             16
+#   Visa                    VISA        4                 13 or 16
 #
 # Your mission Mr. Phelps and (your name here), should you choose to accept it (you must),
 # is to create a credit card class (called 'CreditCard') that will allow us to do some basic 
@@ -57,34 +57,34 @@ require './credit_card_type'
 # prefix, length, and not have expired.
 
 class CreditCard
-	VALID_TYPES = [
-		CreditCardType.new("AMEX", /^3(4|7)\d{13}$/),
-		CreditCardType.new("DCCB", /^30[0-5]\d{11}$/),
-		CreditCardType.new("DISC", /^6(011|5\d\d)\d{12}$/),
-		CreditCardType.new("MC", /^5[1-5]\d{14}$/),
-		CreditCardType.new("VISA", /^4\d{12}(\d{3})?$/)
-	]
-	
-	attr_reader :number, :type
-	
-	def expiration
-		"#{@expiration_month}/#{@expiration_year}"
-	end
-	
-	def expired?
-		today = Date.today
-		@expiration_year < today.year or (@expiration_year == today.year and @expiration_month < today.month)
-	end
-	
-	def initialize(number, expiration_year, expiration_month)
-		@expiration_year, @expiration_month = expiration_year, expiration_month
-		@number = number.to_s
-		# .detect (part of Enumerable) passes each entry in enum to block and returns the first for which block is not false. 
-		# If no object matches, it will return nil
-		@type = VALID_TYPES.detect { |type| type.match(@number) }
-	end
-	
-	def valid?
-		!expired? and !@type.nil?
-	end
+  VALID_TYPES = [
+    CreditCardType.new("AMEX", /^3(4|7)\d{13}$/),
+    CreditCardType.new("DCCB", /^30[0-5]\d{11}$/),
+    CreditCardType.new("DISC", /^6(011|5\d\d)\d{12}$/),
+    CreditCardType.new("MC", /^5[1-5]\d{14}$/),
+    CreditCardType.new("VISA", /^4\d{12}(\d{3})?$/)
+  ]
+  
+  attr_reader :number, :type
+  
+  def expiration
+    "#{@expiration_month}/#{@expiration_year}"
+  end
+  
+  def expired?
+    today = Date.today
+    @expiration_year < today.year or (@expiration_year == today.year and @expiration_month < today.month)
+  end
+  
+  def initialize(number, expiration_year, expiration_month)
+    @expiration_year, @expiration_month = expiration_year, expiration_month
+    @number = number.to_s
+    # .detect (part of Enumerable) passes each entry in enum to block and returns the first for which block is not false. 
+    # If no object matches, it will return nil
+    @type = VALID_TYPES.detect { |type| type.match(@number) }
+  end
+  
+  def valid?
+    !expired? and !@type.nil?
+  end
 end
